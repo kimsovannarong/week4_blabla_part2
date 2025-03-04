@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:week4_blabla/screens/rides/widgets/ride_pref_bar.dart';
-
- 
+import 'package:week4_blabla/service/ride_prefs_service.dart'; 
 import '../../dummy_data/dummy_data.dart';
 import '../../model/ride/ride.dart';
 import '../../model/ride_pref/ride_pref.dart';
@@ -9,7 +8,7 @@ import '../../service/rides_service.dart';
 import '../../theme/theme.dart';
  
 import 'widgets/rides_tile.dart';
-
+// note just testing 
 ///
 ///  The Ride Selection screen allow user to select a ride, once ride preferences have been defined.
 ///  The screen also allow user to re-define the ride preferences and to activate some filters.
@@ -23,23 +22,26 @@ class RidesScreen extends StatefulWidget {
 
 class _RidesScreenState extends State<RidesScreen> {
  
-  RidePreference currentPreference  = fakeRidePrefs[0];   // TODO 1 :  We should get it from the service
-
-  List<Ride> get matchingRides => RidesService.getRidesFor(currentPreference);
+  // 
+   RidePreference currentPreference =RidePrefService.instance.currentPreference!;// TODO 1 :  We should get it from the service
+  RidesFilter currentFilter = RidesFilter(acceptPets: false); // Default filter
+  
+  List<Ride> get matchingRides => RidesService.getRidesFor(currentPreference, currentFilter);
 
   void onBackPressed() {
     Navigator.of(context).pop();     //  Back to the previous view
   } 
 
   void onPreferencePressed() async {
-        // TODO  6 : we should push the modal with the current pref
+    // TODO  6 : we should push the modal with the current pref
 
-        // TODO 9 :  After pop, we should get the new current pref from the modal 
+    // TODO 9 :  After pop, we should get the new current pref from the modal 
 
-        // TODO 10 :  Then we should update the service current pref,   and update the view
+    // TODO 10 :  Then we should update the service current pref,   and update the view
   }
 
   void onFilterPressed() {
+    // TODO: Implement filter logic
   }
 
   @override

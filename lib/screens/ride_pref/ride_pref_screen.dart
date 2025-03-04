@@ -24,11 +24,12 @@ class RidePrefScreen extends StatefulWidget {
 }
 
 class _RidePrefScreenState extends State<RidePrefScreen> {
+  var ridePreService=RidePrefService.instance;// accessing to the service by its instance 
  
   onRidePrefSelected(RidePreference newPreference) async {
 
     // 1 - Update the current preference
-    RidePrefService.instance.setCurrentPreference(newPreference);
+    ridePreService.setCurrentPreference(newPreference);
  
     // 2 - Navigate to the rides screen (with a buttom to top animation)
     await Navigator.of(context).push(AnimationUtils.createBottomToTopRoute(RidesScreen()));
@@ -40,8 +41,8 @@ class _RidePrefScreenState extends State<RidePrefScreen> {
   @override
   Widget build(BuildContext context) {
 
-    RidePreference? currentRidePreference = RidePrefService.instance.currentPreference;
-    List<RidePreference> pastPreferences = RidePrefService.instance.getPastPreferences();
+    RidePreference? currentRidePreference = ridePreService.currentPreference;
+    List<RidePreference> pastPreferences = ridePreService.getPastPreferences();
 
     return Stack(
       children: [
