@@ -42,21 +42,9 @@ class RidesService {
   }
 
 
-  ///
-  ///  Return the relevant rides, given the passenger preferences
-  ///
-  // static List<Ride> getRidesFor(RidePreference preferences, RidesFilter? filter) {
-  //   return RidesService.instance.repository.getRides(preferences, filter);
-
-  // }
-  // Bla 103- not yet success 
+ 
+  // Bla 103- success 
    List<Ride> getRidesFor(RidePreference preferences, RidesFilter? filter,RideSortType? sortType) {
-    // List<Ride> matchingRides=repository
-    // .getRides(preferences, filter)
-    // .toList();
-    // print(matchingRides.length);
-    
-    // return matchingRides;
    List<Ride> matchingRides = repository
         .getRides(preferences, filter)
         .where((ride) =>
