@@ -21,14 +21,7 @@ class RidesService {
   ///
   RidesService._internal(this.repository);
 
-   // singleton accessor
-  static RidesService get instance {
-    if (_instance == null) {
-      throw Exception("RidesService is not initialized. Call initialize() first.");
-    }
-    return _instance!;
-  }
-
+  
   ///
   /// Initialize
   ///
@@ -40,11 +33,51 @@ class RidesService {
     }
   }
 
+   // singleton accessor
+  static RidesService get instance {
+    if (_instance == null) {
+      throw Exception("RidesService is not initialized. Call initialize() first.");
+    }
+    return _instance!;
+  }
+
+
   ///
   ///  Return the relevant rides, given the passenger preferences
   ///
-  static List<Ride> getRidesFor(RidePreference preferences, RidesFilter? filter) {
-    return RidesService.instance.repository.getRides(preferences, filter);
+  // static List<Ride> getRidesFor(RidePreference preferences, RidesFilter? filter) {
+  //   return RidesService.instance.repository.getRides(preferences, filter);
+
+  // }
+  // Bla 103- not yet success 
+   List<Ride> getRidesFor(RidePreference preferences, RidesFilter? filter,RideSortType? sortType) {
+    // List<Ride> matchingRides=repository
+    // .getRides(preferences, filter)
+    // .toList();
+    // print(matchingRides.length);
+    
+    // return matchingRides;
+   List<Ride> matchingRides = repository
+        .getRides(preferences, filter)
+        .where((ride) =>
+            ride.departureLocation == preferences.departure &&
+            ride.arrivalLocation == preferences.arrival &&
+            (filter == null || ride.acceptPets.acceptPets == filter.acceptPets))
+        .toList();
+
+    // handle sorting type if it's provided
+    if (sortType != null) {
+      switch (sortType) {
+        case RideSortType.earliestDeparture:
+          matchingRides.sort((a, b) => a.departureDate.compareTo(b.departureDate));
+          break;
+        case RideSortType.lowestPrice:
+          matchingRides.sort((a, b) => a.pricePerSeat.compareTo(b.pricePerSeat));
+          break;
+      }
+    }
+
+    return matchingRides;
   }
 }
 
@@ -53,4 +86,8 @@ class RidesService {
 class RidesFilter {
   final bool acceptPets;
   RidesFilter({required this.acceptPets});
+}
+enum RideSortType{
+  earliestDeparture,
+  lowestPrice
 }

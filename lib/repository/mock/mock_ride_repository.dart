@@ -106,11 +106,7 @@ class MockRideRepository extends RidesRepository {
         acceptPets: RidesFilter(acceptPets: false),
       ),
     ];
-
-    // Apply filter if provided
-    if (filter != null) {
-      rides = rides.where((ride) => ride.acceptPets.acceptPets == filter.acceptPets).toList();
-    }
+    
     return rides;
   }
 }
